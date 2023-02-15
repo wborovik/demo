@@ -2,6 +2,16 @@ package com.example.demo.service;
 
 import com.example.demo.model.Quote;
 
+import java.util.List;
+
 public interface QuoteService {
-    void createQuote(Long userId, Quote quote);
+    List<Quote> getAllQuotes();
+
+    Quote getQuoteById(Long id);
+
+    void createQuote(Long id, Quote quote);
+
+    void updateQuoteById(Long id, Quote quote);
+
+    void deleteQuoteById(Long id);
 }

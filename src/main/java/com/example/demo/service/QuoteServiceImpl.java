@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class QuoteServiceImpl implements QuoteService {
@@ -20,10 +22,36 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    public void createQuote(Long userId, Quote quote) {
+    public List<Quote> getAllQuotes() {
+        return quoteRepository.findAll();
+    }
 
-        User user = userService.getUserById(userId).get();
-        quote.setUser(user);
-        quoteRepository.save(quote);
+    @Override
+    public Quote getQuoteById(Long id) {
+        return quoteRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void createQuote(Long id, Quote quote) {
+
+        User user = userService.getUserById(id);
+        if (user != null) {
+            quote.setUser(user);
+
+            quoteRepository.save(quote);
+        }
+    }
+
+    @Override
+    public void updateQuoteById(Long id, Quote quote) {
+        Quote quoteUpdate = getQuoteById(id);
+        quoteUpdate.setQuote(quote.getQuote());
+
+        quoteRepository.save(quoteUpdate);
+    }
+
+    @Override
+    public void deleteQuoteById(Long id) {
+        quoteRepository.deleteById(id);
     }
 }

@@ -36,10 +36,11 @@ public class UserController {
 
     @GetMapping("/getUserById/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> userData = userService.getUserById(id);
-
-        return userData.map(user -> new ResponseEntity<>(user, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        User user = userService.getUserById(id);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/createUser")
