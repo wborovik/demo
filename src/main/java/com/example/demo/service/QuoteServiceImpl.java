@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -46,6 +47,7 @@ public class QuoteServiceImpl implements QuoteService {
     public void updateQuoteById(Long id, Quote quote) {
         Quote quoteUpdate = getQuoteById(id);
         quoteUpdate.setQuote(quote.getQuote());
+        quoteUpdate.setDateCreateOrUpdate(LocalDate.now());
 
         quoteRepository.save(quoteUpdate);
     }

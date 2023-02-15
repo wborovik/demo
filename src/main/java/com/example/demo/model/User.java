@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,12 +18,14 @@ public class User {
     @GeneratedValue(generator = "generator")
     @Column(name = "id")
     private Long id;
-    @Column(name = "name")
-    private String name;
     @Column(name = "login")
     private String login;
     @Column(name = "email")
     private String email;
+    @Column(name = "password")
+    private String password;
     @Column(name = "date_create")
     private final LocalDate dateCreateUser = LocalDate.now();
+    @OneToMany(mappedBy = "user")
+    private List<Quote> quotes;
 }

@@ -38,9 +38,9 @@ public class UserServiceImpl implements UserService {
     public void updateUserById(Long id, User user) {
         User userUpdate = getUserById(id);
 
-        userUpdate.setName(user.getName());
         userUpdate.setLogin(user.getLogin());
         userUpdate.setEmail(user.getEmail());
+        userUpdate.setPassword(user.getPassword());
 
         userRepository.save(userUpdate);
     }

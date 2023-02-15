@@ -8,6 +8,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Entity
@@ -20,9 +22,15 @@ public class Quote {
     private Long id;
     @Column(name = "quote")
     private String quote;
+    @Column(name = "date_create_update")
+    private LocalDate dateCreateOrUpdate = LocalDate.now();
     @ManyToOne
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private User user;
+
+    @OneToOne
+    @JoinColumn(name = "votes")
+    private Vote votes;
 }
