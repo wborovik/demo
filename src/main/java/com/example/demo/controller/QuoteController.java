@@ -36,6 +36,43 @@ public class QuoteController {
         }
     }
 
+    @GetMapping("/quotes/top")
+    public ResponseEntity<List<Quote>> getTopQuotes() {
+        try {
+            List<Quote> quotes = new ArrayList<>(quoteService.getTopQuotes());
+
+            if (quotes.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(quotes, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/quotes/flop")
+    public ResponseEntity<List<Quote>> getFlopQuotes() {
+        try {
+            List<Quote> quotes = new ArrayList<>(quoteService.getFlopQuotes());
+
+            if (quotes.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(quotes, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/quote/random")
+    public ResponseEntity<Quote> getRandomQuote() {
+        Quote quote = quoteService.getRandomQuote();
+        if (quote == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(quote, HttpStatus.OK);
+    }
+
     @GetMapping("/quote/{id}")
     public ResponseEntity<Quote> getQuoteById(@PathVariable Long id) {
         Quote quote = quoteService.getQuoteById(id);

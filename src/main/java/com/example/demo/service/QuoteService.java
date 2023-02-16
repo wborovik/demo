@@ -9,6 +9,12 @@ public interface QuoteService {
 
     Quote getQuoteById(Long id);
 
+    List<Quote> getTopQuotes();
+
+    List<Quote> getFlopQuotes();
+
+    Quote getRandomQuote();
+
     void createQuote(Long id, Quote quote);
 
     void updateQuoteById(Long id, Quote quote);

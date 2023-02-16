@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,6 +35,24 @@ public class QuoteServiceImpl implements QuoteService {
     @Override
     public Quote getQuoteById(Long id) {
         return quoteRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Quote> getTopQuotes() {
+        return quoteRepository.findAll().stream()
+                .sorted((o1, o2) -> o2.getVote().getVote() - o1.getVote().getVote()).limit(10).toList();
+    }
+
+    @Override
+    public List<Quote> getFlopQuotes() {
+        return quoteRepository.findAll().stream()
+                .sorted(Comparator.comparingInt(o -> o.getVote().getVote())).limit(10).toList();
+    }
+
+    @Override
+    public Quote getRandomQuote() {
+        Optional<Quote> quoteOptional = quoteRepository.findAll().stream().findAny();
+        return quoteOptional.orElse(null);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,8 +23,6 @@ public class Quote {
     private LocalDate dateCreateOrUpdate = LocalDate.now();
     @ManyToOne
     @JoinColumn(name = "user_id")
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private User user;
 
     @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
