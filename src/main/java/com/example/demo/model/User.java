@@ -26,6 +26,6 @@ public class User {
     private String password;
     @Column(name = "date_create")
     private final LocalDate dateCreateUser = LocalDate.now();
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Quote> quotes;
 }

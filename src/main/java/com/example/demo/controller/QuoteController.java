@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Quote;
-import com.example.demo.model.User;
-import com.example.demo.repositiry.QuoteRepository;
-import com.example.demo.repositiry.UserRepository;
 import com.example.demo.service.QuoteService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class QuoteController {
@@ -26,7 +22,7 @@ public class QuoteController {
         this.userService = userService;
     }
 
-    @GetMapping("/getAllQuotes")
+    @GetMapping("/quotes")
     public ResponseEntity<List<Quote>> getAllQuotes() {
         try {
             List<Quote> quotes = new ArrayList<>(quoteService.getAllQuotes());
@@ -40,7 +36,7 @@ public class QuoteController {
         }
     }
 
-    @GetMapping("/getQuoteById/{id}")
+    @GetMapping("/quote/{id}")
     public ResponseEntity<Quote> getQuoteById(@PathVariable Long id) {
         Quote quote = quoteService.getQuoteById(id);
 
@@ -50,17 +46,17 @@ public class QuoteController {
         return new ResponseEntity<>(quote, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/createQuote")
-    public ResponseEntity<Quote> createQuote(@PathVariable Long id, @RequestBody Quote quote) {
-        if (quote == null || userService.getUserById(id) == null) {
+    @PostMapping("/quote/create/{userId}")
+    public ResponseEntity<Quote> createQuote(@PathVariable Long userId, @RequestBody Quote quote) {
+        if (quote == null || userService.getUserById(userId) == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        quoteService.createQuote(id, quote);
+        quoteService.createQuote(userId, quote);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/updateQuoteById/{id}")
+    @PutMapping("/quote/update/{id}")
     public ResponseEntity<Quote> updateQuoteById(@PathVariable Long id, @RequestBody Quote quote) {
         if (quote == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -70,7 +66,7 @@ public class QuoteController {
         return new ResponseEntity<>(quote, HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteQuoteById/{id}")
+    @DeleteMapping("/quote/delete/{id}")
     public ResponseEntity<HttpStatus> deleteQuoteById(@PathVariable Long id) {
         quoteService.deleteQuoteById(id);
 

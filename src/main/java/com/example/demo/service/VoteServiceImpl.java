@@ -10,8 +10,8 @@ import java.util.List;
 
 @Service
 @Transactional
-public class VoteServiceImpl implements VoteService {
-    VoteRepository voteRepository;
+ public class VoteServiceImpl implements VoteService {
+    private final VoteRepository voteRepository;
 
     @Autowired
     public VoteServiceImpl(VoteRepository voteRepository) {
@@ -31,7 +31,7 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public void createVote(Vote vote) {
-
+         voteRepository.save(vote);
     }
 
     @Override

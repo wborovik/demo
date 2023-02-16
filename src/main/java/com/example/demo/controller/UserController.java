@@ -20,7 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/getAllUsers")
+    @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         try {
             List<User> users = new ArrayList<>(userService.getAllUsers());
@@ -34,7 +34,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getUserById/{id}")
+    @GetMapping("/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
         if (user == null) {
@@ -43,7 +43,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/createUser")
+    @PostMapping("/user/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -53,7 +53,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @PutMapping("/updateUserById/{id}")
+    @PutMapping("/user/update/{id}")
     public ResponseEntity<User> updateUserById(@PathVariable Long id, @RequestBody User user) {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -63,7 +63,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteUserById/{id}")
+    @DeleteMapping("/user/delete/{id}")
     public ResponseEntity<HttpStatus> deleteUserById(@PathVariable Long id) {
         userService.deleteUserById(id);
 
