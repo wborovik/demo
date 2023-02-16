@@ -33,6 +33,12 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
+    public List<Quote> getAllQuotesByUserId(Long userId) {
+        List<Quote> list = getAllQuotes();
+        return list.stream().filter(u -> u.getUser().getId().equals(userId)).toList();
+    }
+
+    @Override
     public Quote getQuoteById(Long id) {
         return quoteRepository.findById(id).orElse(null);
     }

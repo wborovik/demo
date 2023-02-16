@@ -36,6 +36,20 @@ public class QuoteController {
         }
     }
 
+    @GetMapping("/user/quotes/{userId}")
+    public ResponseEntity<List<Quote>> getAllQuotesByUserId(@PathVariable Long userId) {
+        try {
+            List<Quote> quotes = new ArrayList<>(quoteService.getAllQuotesByUserId(userId));
+
+            if (quotes.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(quotes, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/quotes/top")
     public ResponseEntity<List<Quote>> getTopQuotes() {
         try {

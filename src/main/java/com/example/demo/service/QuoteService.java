@@ -7,6 +7,8 @@ import java.util.List;
 public interface QuoteService {
     List<Quote> getAllQuotes();
 
+    List<Quote> getAllQuotesByUserId(Long userId);
+
     Quote getQuoteById(Long id);
 
     List<Quote> getTopQuotes();
