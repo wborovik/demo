@@ -6,11 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Transactional
- public class VoteServiceImpl implements VoteService {
+public class VoteServiceImpl implements VoteService {
     private final VoteRepository voteRepository;
 
     @Autowired
@@ -18,29 +16,25 @@ import java.util.List;
         this.voteRepository = voteRepository;
     }
 
-
-    @Override
-    public List<Vote> getAllVote() {
-        return null;
-    }
-
     @Override
     public Vote getVoteById(Long id) {
-        return null;
+        return voteRepository.findById(id).orElse(null);
     }
 
     @Override
     public void createVote(Vote vote) {
-         voteRepository.save(vote);
+        voteRepository.save(vote);
     }
 
     @Override
-    public void updateVoteById(Long id, Vote vote) {
-
+    public void plusVote(Vote vote) {
+        vote.setVote(vote.getVote() + 1);
+        voteRepository.save(vote);
     }
 
     @Override
-    public void deleteVoteById(Long id) {
-
+    public void minusVote(Vote vote) {
+        vote.setVote(vote.getVote() - 1);
+        voteRepository.save(vote);
     }
 }
